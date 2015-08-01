@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(version: 20150801151103) do
 
   create_table "posts", force: :cascade do |t|
-    t.string   "title",           limit: 255, default: "", null: false
+    t.string   "caption",         limit: 255, default: "", null: false
     t.integer  "lat",             limit: 4
     t.integer  "long",            limit: 4
     t.string   "file_path",       limit: 255, default: "", null: false

@@ -1,7 +1,7 @@
 class CreatePostsTable < ActiveRecord::Migration
   def change
     create_table :posts do |t|
-      t.string :title, default: '', null: false
+      t.string :caption, default: '', null: false
       t.integer :lat
       t.integer :long
       t.string :file_path, default: '', null: false

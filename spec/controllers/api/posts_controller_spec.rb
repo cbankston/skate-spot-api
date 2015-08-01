@@ -16,7 +16,7 @@ describe Api::PostsController do
 
   describe '#create' do
     let(:make_request) { post :create, params }
-    let(:params) {{ post: { title: 'test' } }}
+    let(:params) {{ post: { caption: 'test' } }}
     let(:mock_post) { double('mock_post') }
 
     before do
@@ -25,7 +25,7 @@ describe Api::PostsController do
     end
 
     it 'should call Post.new with args' do
-      expect(Post).to receive(:new).with({ title: 'test' })
+      expect(Post).to receive(:new).with({ caption: 'test' })
       make_request
     end
 
@@ -44,7 +44,7 @@ describe Api::PostsController do
 
   describe '#update' do
     let(:make_request) { put :update, params }
-    let(:params) {{ id: 1, post: { title: 'test' } }}
+    let(:params) {{ id: 1, post: { caption: 'test' } }}
     let(:mock_post) { double('mock_post') }
 
     before do
@@ -59,7 +59,7 @@ describe Api::PostsController do
     end
 
     it 'should call post.attributes = update_params' do
-      expect(mock_post).to receive(:attributes=).with({ title: 'test' })
+      expect(mock_post).to receive(:attributes=).with({ caption: 'test' })
       make_request
     end
 
