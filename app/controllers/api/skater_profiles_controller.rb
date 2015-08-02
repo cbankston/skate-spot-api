@@ -1,26 +1,28 @@
 class Api::SkaterProfilesController < ApplicationController
   def show
-    profile = SkaterProfile.find_by(skater_id: current_skater.id)
+    profile = find_profile(current_skater.id)
 
     render json: profile
   end
 
   def create
-    profile = SkaterProfile.new(create_params)
-    profile.save!
+    profile = SkaterProfile.create!(create_params)
 
     render json: profile
   end
 
   def update
-    profile = SkaterProfile.find_by(skater_id: current_skater.id)
-    profile.attributes = update_params
-    profile.save!
+    profile = find_profile(current_skater.id)
+    profile.update_attributes!(update_params)
 
     render json: profile
   end
 
   private
+
+  def find_profile(current_skater_id)
+    SkaterProfile.find_by(skater_id: current_skater_id)
+  end
 
   def create_params
     params.require(:profile).permit(:skater_id, :first_name, :last_name, :avatar_file_path)

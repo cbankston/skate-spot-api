@@ -11,7 +11,7 @@ class Api::PostsController < ApplicationController
   end
 
   def update
-    post = Post.find_by(skater_id: params[:id])
+    post = Post.find(params[:id])
     post.attributes = update_params
     post.save!
 

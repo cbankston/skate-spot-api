@@ -33,17 +33,11 @@ describe Api::SkaterProfilesController do
     let(:mock_skater_profile) { double('mock_skater_profile') }
 
     before do
-      allow(SkaterProfile).to receive(:new).and_return(mock_skater_profile)
-      allow(mock_skater_profile).to receive(:save!)
+      allow(SkaterProfile).to receive(:create!).and_return(mock_skater_profile)
     end
 
     it 'should call SkaterProfile.new with args' do
-      expect(SkaterProfile).to receive(:new).with({"skater_id"=>"1", "first_name"=>"Logan", "last_name"=>"Fisher", "avatar_file_path"=>"path/to/file"})
-      make_request
-    end
-
-    it 'should call mock_skater_profile.save! with no args' do
-      expect(mock_skater_profile).to receive(:save!).with(no_args)
+      expect(SkaterProfile).to receive(:create!).with({"skater_id"=>"1", "first_name"=>"Logan", "last_name"=>"Fisher", "avatar_file_path"=>"path/to/file"})
       make_request
     end
 
@@ -62,8 +56,7 @@ describe Api::SkaterProfilesController do
 
     before do
       allow(SkaterProfile).to receive(:find_by).and_return(mock_skater_profile)
-      allow(mock_skater_profile).to receive(:attributes=)
-      allow(mock_skater_profile).to receive(:save!)
+      allow(mock_skater_profile).to receive(:update_attributes!)
     end
 
     it 'should call SkaterProfile.find_by with args' do
@@ -72,12 +65,7 @@ describe Api::SkaterProfilesController do
     end
 
     it 'should call profile.attributes = update_params' do
-      expect(mock_skater_profile).to receive(:attributes=).with({ "first_name"=>"Logan", "last_name"=>"Fisher", "avatar_file_path"=>"path/to/file" })
-      make_request
-    end
-
-    it 'should call profile.save!' do
-      expect(mock_skater_profile).to receive(:save!).with(no_args)
+      expect(mock_skater_profile).to receive(:update_attributes!).with({ "skater_id"=>"1", "first_name"=>"Logan", "last_name"=>"Fisher", "avatar_file_path"=>"path/to/file" })
       make_request
     end
 
