@@ -1,15 +1,21 @@
 require 'rails_helper'
 
 describe Api::PostsController do
+  let(:current_skater_mock) { double('mock_current_skater', id: 1) }
+
+  before do
+    allow(controller).to receive(:current_skater).and_return(current_skater_mock)
+  end
+
   describe '#index' do
     let(:make_request) { get :index }
 
     before do
-      allow(Post).to receive(:all)
+      allow(Post).to receive(:find_by)
     end
 
-    it 'should call Post.all' do
-      expect(Post).to receive(:all).with(no_args)
+    it 'should call Post.find_by with args' do
+      expect(Post).to receive(:find_by).with({ skater_id: current_skater_mock.id })
       make_request
     end
   end
@@ -48,13 +54,13 @@ describe Api::PostsController do
     let(:mock_post) { double('mock_post') }
 
     before do
-      allow(Post).to receive(:find).and_return(mock_post)
+      allow(Post).to receive(:find_by).and_return(mock_post)
       allow(mock_post).to receive(:attributes=)
       allow(mock_post).to receive(:save!)
     end
 
-    it 'should call Post.find with args' do
-      expect(Post).to receive(:find).with('1')
+    it 'should call Post.find_by with args' do
+      expect(Post).to receive(:find_by).with({ :skater_id=>"1" })
       make_request
     end
 

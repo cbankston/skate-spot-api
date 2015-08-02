@@ -1,6 +1,4 @@
 class Api::PostsController < ApplicationController
-  before_action :authenticate_skater!
-
   def index
     render json: Post.find_by(skater_id: current_skater.id)
   end
