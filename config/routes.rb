@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   namespace :api do
     resources :posts, except: [:new, :edit]
     resource :skater_profile, except: [:index]
+    resources :spots, only: [:create]
   end
 end
