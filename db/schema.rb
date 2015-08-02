@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150801200843) do
+ActiveRecord::Schema.define(version: 20150802033933) do
 
   create_table "posts", force: :cascade do |t|
     t.string   "caption",         limit: 255, default: "", null: false
@@ -53,5 +53,14 @@ ActiveRecord::Schema.define(version: 20150801200843) do
 
   add_index "skaters", ["reset_password_token"], name: "index_skaters_on_reset_password_token", unique: true, using: :btree
   add_index "skaters", ["username"], name: "index_skaters_on_username", unique: true, using: :btree
+
+  create_table "spots", force: :cascade do |t|
+    t.integer  "skater_id",  limit: 4
+    t.integer  "lat",        limit: 4
+    t.integer  "long",       limit: 4
+    t.string   "name",       limit: 255, default: "", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
