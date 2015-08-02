@@ -1,6 +1,8 @@
 class Api::PostsController < ApplicationController
+  before_action :authenticate_skater!
+
   def index
-    render json: Post.all
+    render json: Post.find_by(skater_id: current_skater.id)
   end
 
   def create
@@ -11,7 +13,7 @@ class Api::PostsController < ApplicationController
   end
 
   def update
-    post = Post.find(params[:id])
+    post = Post.find_by(skater_id: params[:id])
     post.attributes = update_params
     post.save!
 
