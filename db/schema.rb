@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150802033933) do
+ActiveRecord::Schema.define(version: 20150802042355) do
+
+  create_table "post_votes", force: :cascade do |t|
+    t.integer  "skater_id",  limit: 4
+    t.integer  "post_id",    limit: 4
+    t.string   "direction",  limit: 255, default: "", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "posts", force: :cascade do |t|
     t.string   "caption",         limit: 255, default: "", null: false
