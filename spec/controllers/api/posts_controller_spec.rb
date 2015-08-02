@@ -30,7 +30,7 @@ describe Api::PostsController do
     end
 
     it 'should call Post.create! with args' do
-      expect(Post).to receive(:create!).with({ caption: 'test' })
+      expect(Post).to receive(:create!).with({ caption: 'test', skater_id: 1 })
       make_request
     end
 

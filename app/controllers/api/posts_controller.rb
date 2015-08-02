@@ -19,10 +19,12 @@ class Api::PostsController < ApplicationController
   private
 
   def create_params
-    params.require(:post).permit(:caption, :lat, :long, :file_path, :url, :skater_id, :up_vote_count, :down_vote_count)
+    params.require(:post).permit(:caption, :lat, :long, :file_path, :url, :spot_id).tap do |create_params|
+      create_params[:skater_id] = current_skater.id
+    end
   end
 
   def update_params
-    params.require(:post).permit(:caption, :lat, :long, :file_path, :url, :skater_id, :up_vote_count, :down_vote_count)
+    params.require(:post).permit(:caption, :file_path)
   end
 end
