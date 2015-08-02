@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'devise'
 gem 'rails', '4.2.3'
 gem 'mysql2', '~> 0.3.19'
 gem 'sass-rails', '~> 5.0'
