@@ -5,5 +5,6 @@ Rails.application.routes.draw do
     resources :posts, except: [:new, :edit]
     resource :skater_profile, except: [:index]
     resources :spots, only: [:create]
+    resources :post_votes, only: [:create]
   end
 end

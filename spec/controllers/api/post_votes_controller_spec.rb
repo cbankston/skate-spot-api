@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::SpotsController do
+describe Api::PostVotesController do
   let(:current_skater_mock) { double('mock_current_skater', id: 1) }
 
   before do
@@ -8,16 +8,16 @@ describe Api::SpotsController do
   end
 
   describe '#create' do
-    let(:params) { { spot: { name: 'Test Spot', lat: 12343, long: 34346456 } } }
+    let(:params) { { vote: { post_id: 3, direction: 'up' } } }
     let(:make_request) { post :create, params }
-    let(:mock_spot) { double('mock_spot') }
+    let(:mock_vote) { double('mock_vote') }
 
     before do
-      allow(Spot).to receive(:create!).and_return(mock_spot)
+      allow(PostVote).to receive(:create!).and_return(mock_vote)
     end
 
-    it 'should call Spot.create! with args' do
-      expect(Spot).to receive(:create!).with({"lat"=>"12343", "long"=>"34346456", "name"=>"Test Spot", "skater_id"=>current_skater_mock.id})
+    it 'should call PostVote.create! with args' do
+      expect(PostVote).to receive(:create!).with({"post_id"=>"3", "direction"=>"up", "skater_id"=>current_skater_mock.id})
       make_request
     end
 
@@ -29,4 +29,3 @@ describe Api::SpotsController do
     end
   end
 end
-

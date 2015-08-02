@@ -8,6 +8,8 @@ class Api::SpotsController < ApplicationController
   private
 
   def create_params
-    params.require(:spot).permit(:skater_id, :lat, :long, :name)
+    params.require(:spot).permit(:lat, :long, :name).tap do |create_params|
+      create_params[:skater_id] = current_skater.id
+    end
   end
 end
