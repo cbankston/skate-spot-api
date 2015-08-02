@@ -1,8 +1,8 @@
 class Api::PostVotesController < ApplicationController
   def create
-    vote = PostVote.create!(create_params)
+    PostVote.create!(create_params)
 
-    render json: vote
+    render json: true
   end
 
   private
