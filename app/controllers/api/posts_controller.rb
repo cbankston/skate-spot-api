@@ -1,19 +1,17 @@
 class Api::PostsController < ApplicationController
   def index
-    render json: Post.all
+    render json: Post.find_by(skater_id: current_skater.id)
   end
 
   def create
-    post = Post.new(create_params)
-    post.save!
+    post = Post.create!(create_params)
 
     render json: post
   end
 
   def update
     post = Post.find(params[:id])
-    post.attributes = update_params
-    post.save!
+    post.update_attributes!(update_params)
 
     render json: post
   end

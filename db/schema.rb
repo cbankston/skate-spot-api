@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150801182928) do
+ActiveRecord::Schema.define(version: 20150801200843) do
 
   create_table "posts", force: :cascade do |t|
     t.string   "caption",         limit: 255, default: "", null: false
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 20150801182928) do
     t.integer  "skater_id",       limit: 4
     t.integer  "up_vote_count",   limit: 4
     t.integer  "down_vote_count", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "skater_profiles", force: :cascade do |t|
+    t.integer  "skater_id",        limit: 4
+    t.string   "first_name",       limit: 255, default: "", null: false
+    t.string   "last_name",        limit: 255, default: "", null: false
+    t.string   "avatar_file_path", limit: 255, default: "", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
