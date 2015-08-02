@@ -25,7 +25,9 @@ class Api::SkaterProfilesController < ApplicationController
   end
 
   def create_params
-    params.require(:profile).permit(:skater_id, :first_name, :last_name, :avatar_file_path)
+    params.require(:profile).permit(:first_name, :last_name, :avatar_file_path).tap do |create_params|
+        create_params[:skater_id] = current_skater.id
+    end
   end
 
   def update_params
