@@ -1,19 +1,19 @@
 class Api::PostsController < ApplicationController
   def index
-    render json: Post.find_by(skater_id: current_skater.id)
+    render json: Post.find_by(skater_id: current_skater.id), each_serializer: PostSerializer
   end
 
   def create
     post = Post.create!(create_params)
 
-    render json: post
+    render json: post, serializer: PostSerializer
   end
 
   def update
     post = Post.find(params[:id])
     post.update_attributes!(update_params)
 
-    render json: post
+    render json: post, serializer: PostSerializer
   end
 
   private

@@ -2,6 +2,15 @@ require 'rails_helper'
 
 describe Api::PostsController do
   let(:current_skater_mock) { double('mock_current_skater', id: 1) }
+  let(:response_body) { JSON.parse(response.body) }
+
+  let(:mock_post) do
+    double('mock_post', id: 2, skater_id: 1, caption: 'test caption', lat: 123434, long: 12343452354, file_path: 'path/to/file', url: 'fake.url.com', up_vote_count: 23, down_vote_count: 87).tap do |post|
+      allow(post).to receive(:read_attribute_for_serialization) { |name| post.send(name) }
+    end
+  end
+
+  let(:mock_posts) { [mock_post] }
 
   before do
     allow(controller).to receive(:current_skater).and_return(current_skater_mock)
@@ -11,19 +20,23 @@ describe Api::PostsController do
     let(:make_request) { get :index }
 
     before do
-      allow(Post).to receive(:find_by)
+      allow(Post).to receive(:find_by).and_return(mock_posts)
     end
 
     it 'should call Post.find_by with args' do
       expect(Post).to receive(:find_by).with({ skater_id: current_skater_mock.id })
       make_request
     end
+
+    it 'should return posts' do
+      make_request
+      expect(response_body).to eq({"posts"=>[{"id"=>2, "caption"=>"test caption", "lat"=>123434, "long"=>12343452354, "file_path"=>"path/to/file", "url"=>"fake.url.com", "skater_id"=>1, "up_vote_count"=>23, "down_vote_count"=>87}]})
+    end
   end
 
   describe '#create' do
     let(:make_request) { post :create, params }
     let(:params) {{ post: { caption: 'test' } }}
-    let(:mock_post) { double('mock_post') }
 
     before do
       allow(Post).to receive(:create!).and_return(mock_post)
@@ -32,6 +45,11 @@ describe Api::PostsController do
     it 'should call Post.create! with args' do
       expect(Post).to receive(:create!).with({ caption: 'test' })
       make_request
+    end
+
+    it 'should return the created post' do
+      make_request
+      expect(response_body).to eq({"post"=>{"id"=>2, "caption"=>"test caption", "lat"=>123434, "long"=>12343452354, "file_path"=>"path/to/file", "url"=>"fake.url.com", "skater_id"=>1, "up_vote_count"=>23, "down_vote_count"=>87}})
     end
 
     describe 'when the response is successful' do
@@ -45,7 +63,6 @@ describe Api::PostsController do
   describe '#update' do
     let(:make_request) { put :update, params }
     let(:params) {{ id: 1, post: { caption: 'test' } }}
-    let(:mock_post) { double('mock_post') }
 
     before do
       allow(Post).to receive(:find).and_return(mock_post)
@@ -60,6 +77,11 @@ describe Api::PostsController do
     it 'should call post.update_attributes!' do
       expect(mock_post).to receive(:update_attributes!).with({ caption: 'test' })
       make_request
+    end
+
+    it 'should return the updated post' do
+      make_request
+      expect(response_body).to eq({"post"=>{"id"=>2, "caption"=>"test caption", "lat"=>123434, "long"=>12343452354, "file_path"=>"path/to/file", "url"=>"fake.url.com", "skater_id"=>1, "up_vote_count"=>23, "down_vote_count"=>87}})
     end
 
     describe 'when the response is successful' do
