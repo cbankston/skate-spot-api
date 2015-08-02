@@ -26,17 +26,11 @@ describe Api::PostsController do
     let(:mock_post) { double('mock_post') }
 
     before do
-      allow(Post).to receive(:new).and_return(mock_post)
-      allow(mock_post).to receive(:save!)
+      allow(Post).to receive(:create!).and_return(mock_post)
     end
 
-    it 'should call Post.new with args' do
-      expect(Post).to receive(:new).with({ caption: 'test' })
-      make_request
-    end
-
-    it 'should call mock_post.save! with no args' do
-      expect(mock_post).to receive(:save!).with(no_args)
+    it 'should call Post.create! with args' do
+      expect(Post).to receive(:create!).with({ caption: 'test' })
       make_request
     end
 
@@ -55,8 +49,7 @@ describe Api::PostsController do
 
     before do
       allow(Post).to receive(:find).and_return(mock_post)
-      allow(mock_post).to receive(:attributes=)
-      allow(mock_post).to receive(:save!)
+      allow(mock_post).to receive(:update_attributes!)
     end
 
     it 'should call Post.find with args' do
@@ -64,13 +57,8 @@ describe Api::PostsController do
       make_request
     end
 
-    it 'should call post.attributes = update_params' do
-      expect(mock_post).to receive(:attributes=).with({ caption: 'test' })
-      make_request
-    end
-
-    it 'should call post.save!' do
-      expect(mock_post).to receive(:save!).with(no_args)
+    it 'should call post.update_attributes!' do
+      expect(mock_post).to receive(:update_attributes!).with({ caption: 'test' })
       make_request
     end
 
