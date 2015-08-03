@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150802042355) do
+ActiveRecord::Schema.define(version: 20150802205204) do
 
   create_table "post_votes", force: :cascade do |t|
     t.integer  "skater_id",  limit: 4
@@ -32,6 +32,13 @@ ActiveRecord::Schema.define(version: 20150802042355) do
     t.integer  "down_vote_count", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "spot_id",         limit: 4
+  end
+
+  create_table "seed_migration_data_migrations", force: :cascade do |t|
+    t.string   "version",     limit: 255
+    t.integer  "runtime",     limit: 4
+    t.datetime "migrated_on"
   end
 
   create_table "skater_profiles", force: :cascade do |t|

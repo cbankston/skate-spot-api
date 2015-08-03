@@ -1,4 +1,8 @@
 class Api::SpotsController < ApplicationController
+  def index
+    render json: Spot.all
+  end
+
   def create
     spot = Spot.create!(create_params)
 
