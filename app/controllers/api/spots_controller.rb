@@ -6,7 +6,7 @@ class Api::SpotsController < ApplicationController
   def create
     spot = Spot.create!(create_params)
 
-    render json: spot
+    render json: spot, serializer: SpotSerializer
   end
 
   private

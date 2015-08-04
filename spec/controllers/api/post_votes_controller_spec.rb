@@ -10,15 +10,20 @@ describe Api::PostVotesController do
   describe '#create' do
     let(:params) { { vote: { post_id: 3, direction: 'up' } } }
     let(:make_request) { post :create, params }
-    let(:mock_vote) { double('mock_vote') }
+    let(:mock_vote) { double('mock_vote', id: 2, post_id: 3, direction: 'up', skater_id: current_skater_mock.id) }
 
     before do
       allow(PostVote).to receive(:create!).and_return(mock_vote)
     end
 
     it 'should call PostVote.create! with args' do
-      expect(PostVote).to receive(:create!).with({"post_id"=>"3", "direction"=>"up", "skater_id"=>current_skater_mock.id})
+      expect(PostVote).to receive(:create!).with({"post_id"=>"3", "direction"=>"up", "skater_id"=>1})
       make_request
+    end
+
+    it 'should return true' do
+      make_request
+      expect(response.body).to eq("true")
     end
 
     describe 'when the response is successful' do
