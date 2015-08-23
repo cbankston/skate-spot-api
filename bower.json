@@ -1,0 +1,16 @@
+{
+  "name": "skate-spot-api",
+  "version": "0.0.0",
+  "homepage": "https://github.com/cbankston/skate-spot-api",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-devise": "~1.1.0"
+  }
+}
